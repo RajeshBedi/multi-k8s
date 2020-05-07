@@ -15,5 +15,10 @@ after_success:
     - docker build -t rajeshbedi/multi-server ./server
     - docker build -t rajeshbedi/multi-worker ./worker
     # Log in to docker CLI
-    
-    # Push to Docker hub
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin    
+    # Push to Docker 
+    - docker push rajeshbedi/multi-client
+    - docker push rajeshbedi/multi-nginx
+    - docker push rajeshbedi/multi-server
+    - docker push rajeshbedi/multi-worker
+
