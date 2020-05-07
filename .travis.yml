@@ -1,0 +1,19 @@
+language: generic
+sudo: required
+services: 
+    - docker
+
+before_install:
+    - docker build -t rajeshbedi/react-test -f ./client/Dockerfile.dev ./client
+
+scripts:
+    - docker run -e CI=true rajeshbedi/react-test npm test
+
+after_success:
+    - docker build -t rajeshbedi/multi-client ./client
+    - docker build -t rajeshbedi/multi-nginx ./nginx
+    - docker build -t rajeshbedi/multi-server ./server
+    - docker build -t rajeshbedi/multi-worker ./worker
+    # Log in to docker CLI
+    
+    # Push to Docker hub
